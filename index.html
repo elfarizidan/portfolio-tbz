@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Rivera — Portfolio</title>
+  <meta name="description" content="Portofolio Alex Rivera, full-stack developer dan UX designer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --bg-alt: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --accent: #2f6fd6;
+      --btn-bg: #111111;
+      --btn-text: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 999px;
+      --max: 1100px;
+    }
+    [data-theme="dark"] {
+      --bg: #0f1115;
+      --bg-alt: #171a21;
+      --text: #f2f2f2;
+      --muted: #a3a8b3;
+      --border: #262a33;
+      --accent: #6aa2ff;
+      --btn-bg: #f2f2f2;
+      --btn-text: #111111;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background .3s, color .3s;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(var(--max), 100% - 3rem); margin-inline: auto; }
+
+    /* ===== Navbar ===== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: .95rem; color: var(--muted); transition: color .2s; position: relative; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); font-weight: 500; }
+    .nav-actions { display: flex; align-items: center; gap: .5rem; }
+    .icon-btn {
+      width: 40px; height: 40px; border: none; background: transparent; color: var(--text);
+      border-radius: 50%; display: grid; place-items: center; cursor: pointer; transition: background .2s;
+    }
+    .icon-btn:hover { background: var(--border); }
+    .icon-btn svg { width: 20px; height: 20px; }
+    .menu-btn { display: none; }
+    .icon-sun { display: none; }
+    [data-theme="dark"] .icon-sun { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+
+    /* ===== Hero ===== */
+    .hero { min-height: calc(100vh - 72px); display: flex; align-items: center; padding: 4rem 0; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }
+    .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: 2px; font-size: .85rem; text-transform: uppercase; margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: 1.08; font-weight: 700; letter-spacing: -1.5px; margin-bottom: 1.5rem; }
+    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 480px; margin-bottom: 2.2rem; }
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .95rem 1.8rem; border-radius: var(--radius); font-weight: 600; font-size: .95rem;
+      border: 1px solid transparent; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s;
+      font-family: inherit;
+    }
+    .btn svg { width: 18px; height: 18px; transition: transform .2s; }
+    .btn-primary { background: var(--btn-bg); color: var(--btn-text); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border-color: var(--border); }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    .hero-photo { display: flex; justify-content: center; }
+    .photo-ring {
+      width: min(400px, 80vw); aspect-ratio: 1; border-radius: 50%;
+      padding: 8px; background: var(--bg-alt); box-shadow: var(--shadow);
+    }
+    .photo {
+      width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+      background: linear-gradient(135deg, #cfd8e3, #9fb2c8);
+      display: grid; place-items: center; color: #fff; font-size: clamp(3rem, 10vw, 6rem); font-weight: 700;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ===== Sections ===== */
+    section.block { padding: 6rem 0; border-top: 1px solid var(--border); }
+    .section-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -1px; margin-bottom: .5rem; }
+    .section-sub { color: var(--muted); margin-bottom: 3rem; max-width: 560px; }
+
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
+    .about-grid p { color: var(--muted); margin-bottom: 1rem; }
+    .skills { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .skill { padding: .5rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; background: var(--bg-alt); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+    .stat { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem; text-align: center; }
+    .stat strong { display: block; font-size: 1.8rem; }
+    .stat span { color: var(--muted); font-size: .85rem; }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .card {
+      background: var(--bg-alt); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .card-thumb { aspect-ratio: 16/10; }
+    .card-body { padding: 1.4rem; }
+    .card-body h3 { font-size: 1.2rem; margin-bottom: .4rem; }
+    .card-body p { color: var(--muted); font-size: .95rem; margin-bottom: 1rem; }
+    .tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .tag { font-size: .75rem; padding: .25rem .7rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+
+    .timeline { display: grid; gap: 1.2rem; }
+    .t-item { display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem; padding: 1.5rem; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px; }
+    .t-date { color: var(--accent); font-weight: 600; font-size: .9rem; }
+    .t-item h3 { font-size: 1.1rem; }
+    .t-item h4 { color: var(--muted); font-weight: 500; font-size: .95rem; margin-bottom: .4rem; }
+    .t-item p { color: var(--muted); font-size: .95rem; }
+
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
+    .contact-info p { color: var(--muted); margin-bottom: 1.5rem; }
+    .contact-info a { display: block; font-weight: 500; margin-bottom: .6rem; }
+    .contact-info a:hover { color: var(--accent); }
+    form { display: grid; gap: 1rem; }
+    input, textarea {
+      width: 100%; padding: 1rem 1.2rem; border-radius: 14px; border: 1px solid var(--border);
+      background: var(--bg-alt); color: var(--text); font: inherit; resize: vertical;
+    }
+    input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .form-msg { color: var(--accent); font-size: .9rem; min-height: 1.2em; }
+
+    /* ===== Footer ===== */
+    footer { border-top: 1px solid var(--border); padding: 1.8rem 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .footer-inner small { color: var(--muted); font-size: .85rem; }
+    .socials { display: flex; gap: 1.2rem; }
+    .socials a { color: var(--text); opacity: .8; transition: opacity .2s, transform .2s; }
+    .socials a:hover { opacity: 1; transform: translateY(-2px); }
+    .socials svg { width: 20px; height: 20px; }
+
+    /* Animasi muncul */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 960px) {
+      .projects { grid-template-columns: repeat(2, 1fr); }
+      .about-grid, .contact-wrap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .menu-btn { display: grid; }
+      .nav-links {
+        position: fixed; top: 72px; left: 0; right: 0;
+        flex-direction: column; gap: 0; background: var(--bg-alt);
+        border-bottom: 1px solid var(--border);
+        max-height: 0; overflow: hidden; transition: max-height .3s ease;
+      }
+      .nav-links.open { max-height: 400px; }
+      .nav-links li a { display: block; padding: 1rem 1.5rem; font-size: 1rem; }
+      .hero { min-height: auto; padding: 3rem 0 4rem; }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+      .hero-photo { order: -1; }
+      .photo-ring { width: min(280px, 70vw); }
+      .hero p { margin-inline: auto; }
+      .btn-group { justify-content: center; }
+      .t-item { grid-template-columns: 1fr; gap: .4rem; }
+      section.block { padding: 4rem 0; }
+    }
+    @media (max-width: 560px) {
+      .projects { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr 1fr; }
+      .stat strong { font-size: 1.4rem; }
+      .footer-inner { flex-direction: column-reverse; text-align: center; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <nav class="container nav">
+      <a href="#home" class="logo">AR.</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Ganti tema">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <p class="eyebrow">Development | Design | Strategy</p>
+          <h1>Hi, I'm Alex<br />Rivera.</h1>
+          <p>A full-stack developer and UX designer passionate about building fast, accessible, and beautiful digital products. Welcome to my portfolio.</p>
+          <div class="btn-group">
+            <a href="#resume" class="btn btn-primary">View Resume
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+          </div>
+        </div>
+        <div class="hero-photo reveal">
+          <div class="photo-ring">
+            <!-- Ganti isi div ini dengan: <img src="foto-anda.jpg" alt="Alex Rivera"> -->
+            <div class="photo">AR</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="block" id="about">
+      <div class="container">
+        <h2 class="section-title reveal">About Me</h2>
+        <p class="section-sub reveal">Sedikit cerita tentang siapa saya dan apa yang saya kerjakan.</p>
+        <div class="about-grid">
+          <div class="reveal">
+            <p>I'm a developer and designer who loves turning complex problems into simple, elegant interfaces. I care about performance, accessibility, and the small details that make products feel great.</p>
+            <p>When I'm not coding, I'm sketching UI ideas, exploring new tools, or sharing what I learn with the community.</p>
+            <div class="stats">
+              <div class="stat"><strong>5+</strong><span>Years Exp.</span></div>
+              <div class="stat"><strong>40+</strong><span>Projects</span></div>
+              <div class="stat"><strong>20+</strong><span>Clients</span></div>
+            </div>
+          </div>
+          <div class="reveal">
+            <h3 style="margin-bottom:1rem">Skills</h3>
+            <div class="skills">
+              <span class="skill">HTML & CSS</span><span class="skill">JavaScript</span>
+              <span class="skill">React</span><span class="skill">Node.js</span>
+              <span class="skill">TypeScript</span><span class="skill">Figma</span>
+              <span class="skill">UI/UX Design</span><span class="skill">PostgreSQL</span>
+              <span class="skill">Tailwind</span><span class="skill">Git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section class="block" id="projects">
+      <div class="container">
+        <h2 class="section-title reveal">Projects</h2>
+        <p class="section-sub reveal">Beberapa proyek pilihan yang pernah saya kerjakan.</p>
+        <div class="projects">
+          <article class="card reveal">
+            <div class="card-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div>
+            <div class="card-body">
+              <h3>E-Commerce Platform</h3>
+              <p>Toko online lengkap dengan keranjang, pembayaran, dan dashboard admin.</p>
+              <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Stripe</span></div>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card-thumb" style="background:linear-gradient(135deg,#43cea2,#185a9d)"></div>
+            <div class="card-body">
+              <h3>Task Manager App</h3>
+              <p>Aplikasi manajemen tugas dengan drag-and-drop dan kolaborasi real-time.</p>
+              <div class="tags"><span class="tag">Vue</span><span class="tag">Firebase</span></div>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card-thumb" style="background:linear-gradient(135deg,#f7971e,#ffd200)"></div>
+            <div class="card-body">
+              <h3>Finance Dashboard</h3>
+              <p>Dashboard analitik keuangan dengan grafik interaktif dan laporan otomatis.</p>
+              <div class="tags"><span class="tag">TypeScript</span><span class="tag">D3.js</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RESUME ===== -->
+    <section class="block" id="resume">
+      <div class="container">
+        <h2 class="section-title reveal">Resume</h2>
+        <p class="section-sub reveal">Pengalaman kerja dan pendidikan saya.</p>
+        <div class="timeline">
+          <div class="t-item reveal">
+            <span class="t-date">2023 — Sekarang</span>
+            <div><h3>Senior Full-Stack Developer</h3><h4>Tech Company Inc.</h4>
+              <p>Memimpin pengembangan produk web dan merancang sistem desain internal.</p></div>
+          </div>
+          <div class="t-item reveal">
+            <span class="t-date">2020 — 2023</span>
+            <div><h3>UI/UX Designer & Developer</h3><h4>Creative Studio</h4>
+              <p>Mendesain dan membangun website serta aplikasi untuk berbagai klien.</p></div>
+          </div>
+          <div class="t-item reveal">
+            <span class="t-date">2016 — 2020</span>
+            <div><h3>S1 Teknik Informatika</h3><h4>Universitas Contoh</h4>
+              <p>Fokus pada rekayasa perangkat lunak dan interaksi manusia-komputer.</p></div>
+          </div>
+        </div>
+        <div class="btn-group reveal" style="margin-top:2rem">
+          <a href="#" class="btn btn-primary">Download CV
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="block" id="contact">
+      <div class="container contact-wrap">
+        <div class="contact-info reveal">
+          <h2 class="section-title">Let's Talk</h2>
+          <p>Punya proyek atau ide? Kirim pesan dan saya akan membalas secepatnya.</p>
+          <a href="mailto:hello@alexrivera.dev">hello@alexrivera.dev</a>
+          <a href="tel:+620000000000">+62 000 0000 0000</a>
+        </div>
+        <form class="reveal" id="contactForm">
+          <input type="text" name="name" placeholder="Nama Anda" required />
+          <input type="email" name="email" placeholder="Email Anda" required />
+          <textarea name="message" rows="5" placeholder="Pesan Anda" required></textarea>
+          <button type="submit" class="btn btn-primary" style="justify-self:start">Kirim Pesan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <p class="form-msg" id="formMsg"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container footer-inner">
+      <small>© <span id="year"></span> Alex Rivera. All rights reserved.</small>
+      <div class="socials">
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.63 7.58H.49l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.3 19.5h2.04L6.48 3.24H4.3L17.6 20.65z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tahun otomatis
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mode gelap/terang (disimpan di localStorage)
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) root.setAttribute('data-theme', saved);
+      else if (matchMedia('(prefers-color-scheme: dark)').matches) root.setAttribute('data-theme', 'dark');
+    } catch (e) {}
+    toggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+
+    // Menu mobile
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', false);
+    }));
+
+    // Link aktif saat scroll
+    const sections = document.querySelectorAll('main section[id]');
+    const links = navLinks.querySelectorAll('a');
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => spy.observe(s));
+
+    // Animasi muncul saat scroll
+    const revealer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('show'); revealer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealer.observe(el));
+
+    // Form kontak (demo)
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('formMsg').textContent = 'Terima kasih! Pesan Anda sudah terkirim.';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
